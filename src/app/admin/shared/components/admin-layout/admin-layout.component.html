@@ -1,2 +1,17 @@
-<h1>Admin Layout</h1>
-<router-outlet></router-outlet>
+<nav class="navbar bg-primary">
+  <a routerLink="/">Angular Admin</a>
+  <ul *ngIf="auth.isAuthenticated()">
+    <li routerLinkActive="active">
+      <a [routerLink]="['/admin', 'dashboard']">Главная</a>
+    </li>
+    <li routerLinkActive="active">
+      <a [routerLink]="['/admin', 'create']">Создать</a>
+    </li>
+    <li>
+      <a href="#" (click)="logout($event)">Выйти</a>
+    </li>
+  </ul>
+</nav>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>

@@ -1,20 +1,38 @@
-<table>
-  <thead>
-  <tr>
-    <th>#</th>
-    <th>Автор</th>
-    <th>Название</th>
-    <th>Дата</th>
-    <th>Действие</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  </tbody>
-</table>
+<div *ngIf="posts.length; else loading">
+  <div class="form-control">
+    <label>
+      <input type="text" placeholder="Найти пост..." [(ngModel)]="searchStr">
+    </label>
+  </div>
+  <table>
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Автор</th>
+      <th>Название</th>
+      <th>Дата</th>
+      <th>Действие</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let post of posts | searchPosts:searchStr; let idx = index">
+      <td>{{idx + 1}}</td>
+      <td>{{post.author}}</td>
+      <td>{{post.title}}</td>
+      <td>{{post.date | date:'medium':null:'ua'}}</td>
+      <td>
+        <button
+          class="btn btn-link open"
+          [routerLink]="['/admin', 'post', post.id, 'edit']"
+        >
+          Открыть
+        </button>
+        <a (click)="remove(post.id)">Удалить</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<ng-template #loading>
+  <p class="text-center">Идёт загрузка...</p>
+</ng-template>
